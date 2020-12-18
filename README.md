@@ -30,6 +30,8 @@ Here are the issues:
 
 - When ever it holds a note, it can't hit other ones. (easy fix, too lazy rn though)
 
+The biggest one is obviously not hitting close together notes. Not sure about why that happens.
+
 # Credits
 I used [rqnn's global C# keyboard hook](https://stackoverflow.com/a/46014022) and [Micheal Noonan's Input Simulator](https://github.com/michaelnoonan/inputsimulator) for input and output.
 
