@@ -15,16 +15,22 @@ Then watch the bot play the song.
 
 # Other keybinds
 F1 - Play
+
 F2 - Stop playing
+
 F3 - Add by 1 to the offset (milliseconds between keypresses)
+
 F4 - Remove by 1 to the offset (milliseconds between keypresses)
 
 # Problems
 So, obviously its not perfect. In fact, it really can't even beat blammed week 3 all the time.
 Here are the issues:
+
 - It can't hit really close notes to eachother, it'll just glitch out.
+
 - When ever it holds a note, it can't hit other ones. (easy fix, too lazy rn though)
 
 # Credits
 I used [rqnn's global C# keyboard hook](https://stackoverflow.com/a/46014022) and [Micheal Noonan's Input Simulator](https://github.com/michaelnoonan/inputsimulator) for input and output.
+
 Go give them love.
