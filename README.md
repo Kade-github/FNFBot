@@ -30,7 +30,9 @@ Here are the issues:
 
 - When ever it holds a note, it can't hit other ones. (easy fix, too lazy rn though)
 
-The biggest one is obviously not hitting close together notes. Not sure about why that happens.
+- On Pico on the drop where both characters are playing at the same time, it just decides to not hit anything.
+
+The biggest ones is obviously not hitting close together notes, and the pico one. Not sure about why any of that happens.
 
 # Credits
 I used [rqnn's global C# keyboard hook](https://stackoverflow.com/a/46014022) and [Micheal Noonan's Input Simulator](https://github.com/michaelnoonan/inputsimulator) for input and output.
