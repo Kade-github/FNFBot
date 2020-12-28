@@ -4,7 +4,7 @@ FNFBot is a [FridayNightFunkin](https://ninja-muffin24.itch.io/funkin) bot that 
 I simply did this just because I thought it would be fun.
 
 # Showcase
-[![ytImage](https://img.youtube.com/vi/TA8UatH57So/0.jpg)](https://www.youtube.com/watch?v=TA8UatH57So)
+[![ytImage](https://img.youtube.com/vi/yFKJskWfiG8/0.jpg)](https://www.youtube.com/watch?v=yFKJskWfiG8)
 
 # Usage
 To use it, go to the [latest release](https://github.com/KadeDev/FNFBot/releases/latest) and download it.
