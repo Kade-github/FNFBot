@@ -82,7 +82,9 @@ namespace FNFBot
                             if (sect.MustHitSection)
                             {
                                 foreach (FNFSong.FNFNote n in sect.Notes)
-                                    notesToPlay.Add(n);
+                                    bool flag = (decimal) n.Type >= 4;
+                                    if (!flag)
+                                        notesToPlay.Add(n);
                             }
                             else
                             {
