@@ -26,16 +26,10 @@ F3 - Add by 1 to the offset (milliseconds between keypresses)
 F4 - Remove by 1 to the offset (milliseconds between keypresses)
 
 # Problems
-So, obviously its not perfect. In fact, it really can't even beat blammed week 3 all the time.
+So, obviously its not perfect.
 Here are the issues:
 
-- It can't hit really close notes to eachother, it'll just glitch out.
-
-- When ever it holds a note, it can't hit other ones. (easy fix, too lazy rn though)
-
-- On Pico on the drop where both characters are playing at the same time, it just decides to not hit anything.
-
-The biggest ones is obviously not hitting close together notes, and the pico one. Not sure about why any of that happens.
+- Having to time the notes (its a hard thing to get used too)
 
 # Credits
 I used [rqnn's global C# keyboard hook](https://stackoverflow.com/a/46014022) and [Micheal Noonan's Input Simulator](https://github.com/michaelnoonan/inputsimulator) for input and output.
