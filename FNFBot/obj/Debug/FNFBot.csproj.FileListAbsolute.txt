@@ -1,0 +1,13 @@
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\FNFBot.exe
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\FNFBot.pdb
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\FNFDataAPI.dll
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\WindowsInput.dll
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\FNFDataAPI.pdb
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\bin\Debug\WindowsInput.xml
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\obj\Debug\FNFBot.csprojAssemblyReference.cache
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\obj\Debug\FNFBot.csproj.CoreCompileInputs.cache
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\obj\Debug\FNFBot.csproj.CopyComplete
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\obj\Debug\FNFBot.exe
+C:\Users\kadep\RiderProjects\FNFBotGithub\FNFBot\FNFBot\obj\Debug\FNFBot.pdb

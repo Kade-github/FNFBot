@@ -33,7 +33,7 @@
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="FNFDataAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-          <HintPath>..\..\FNFDataAPI\FNFDataAPI\bin\Debug\FNFDataAPI.dll</HintPath>
+          <HintPath>..\..\..\FNFDataAPI\FNFDataAPI\bin\Debug\FNFDataAPI.dll</HintPath>
         </Reference>
         <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
           <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>

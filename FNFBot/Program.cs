@@ -70,11 +70,13 @@ namespace FNFBot
             {
                 while (true)
                 {
-                    Console.Title = "FNFBot 1.1";
+                    Console.Title = "FNFBot 1.2 - hi :)";
                     if (playing)
                     {
+                        section = 0;
                         foreach (FNFSong.FNFSection sect in song.Sections)
                         {
+                            section++;
                             List<FNFSong.FNFNote> notesToPlay = new List<FNFSong.FNFNote>();
                             if (sect.Notes.Count == 0)
                                 continue;
@@ -85,7 +87,7 @@ namespace FNFBot
                                 {
                                     if ((int)n.Type >= 4)
                                         continue;
-                                        notesToPlay.Add(n);
+                                    notesToPlay.Add(n);
                                 }
                             }
                             else
@@ -98,7 +100,7 @@ namespace FNFBot
                             }
 
                             notesPlayed = 0;
-                            
+
                             foreach (FNFSong.FNFNote not in notesToPlay)
                             {
                                 new Thread(() =>
@@ -107,9 +109,7 @@ namespace FNFBot
                                     
                                     if (!playing)
                                         Thread.CurrentThread.Abort();
-                                    
-                                    Console.WriteLine("Queing " + not.Type + " at " + not.Time);
-                                    
+
                                     while ((decimal) watch.Elapsed.TotalMilliseconds < not.Time)
                                     {
                                         Thread.Sleep(1);
@@ -132,7 +132,7 @@ namespace FNFBot
 
                                                 }
                                                 else
-                                                    KeyPress(0x41, 0x1e);
+                                                    KeyPress(0x44, 0x1e);
 
                                                 break;
                                             case FNFSong.NoteType.Down:
@@ -144,7 +144,7 @@ namespace FNFBot
                                                     Thread.Sleep(Convert.ToInt32(not.Length));
                                                     simulator.Keyboard.KeyUp(VirtualKeyCode.DOWN);
                                                 }
-                                                else KeyPress(0x53, 0x1f);
+                                                else KeyPress(0x46, 0x1f);
 
                                                 break;
                                             case FNFSong.NoteType.Up:
@@ -158,7 +158,7 @@ namespace FNFBot
 
                                                 }
                                                 else
-                                                    KeyPress(0x57, 0x11);
+                                                    KeyPress(0x4A, 0x11);
 
 
                                                 break;
@@ -173,7 +173,7 @@ namespace FNFBot
 
                                                 }
                                                 else
-                                                    KeyPress(0x44, 0x20);
+                                                    KeyPress(0x4B, 0x20);
 
                                                 break;
                                         }
@@ -181,7 +181,60 @@ namespace FNFBot
                                     notesPlayed++;
                                 }).Start();
                             }
-
+                            Console.Clear();
+                            if (notesToPlay.Count == 0)
+                                continue;
+                            Console.WriteLine("Section: " + section + " | Notes: " + notesToPlay.Count + " | Crochet: " + crochet.ToString() + " | Step Crochet: " + stepCrochet.ToString() + " | Sect Started at: " + watch.Elapsed.TotalMilliseconds);
+                            StringBuilder toWrite = new StringBuilder("    ");
+                            float currentNoteTime = float.Parse(notesToPlay.First().Time.ToString());
+                            float currentY = 0;
+                            foreach(FNFSong.FNFNote note in notesToPlay)
+                            {
+                                if (!playing)
+                                    break;
+                                float time = float.Parse(note.Time.ToString());
+                                float newcurrentY = remapToRange((float) currentNoteTime, (float) 0,
+                                    (float) 16 * stepCrochet, (float) 0, (float) 0 + 3);
+                                if (currentY < newcurrentY)
+                                {
+                                    currentNoteTime = time;
+                                    toWrite = new StringBuilder("    ");
+                                }
+                                
+                                switch (note.Type)
+                                {
+                                    case FNFSong.NoteType.Left:
+                                    case FNFSong.NoteType.RLeft:
+                                        if (note.Length == 0)
+                                            toWrite[0] = '←';
+                                        else
+                                            toWrite[0] = 'H';
+                                        break;
+                                    case FNFSong.NoteType.Down:
+                                    case FNFSong.NoteType.RDown:
+                                        if (note.Length == 0)
+                                            toWrite[1] = '↓';
+                                        else
+                                            toWrite[1] = 'H';
+                                        break;
+                                    case FNFSong.NoteType.Up:
+                                    case FNFSong.NoteType.RUp:
+                                        if (note.Length == 0)
+                                            toWrite[2] = '↑';
+                                        else
+                                            toWrite[2] = 'H';
+                                        break; 
+                                    case FNFSong.NoteType.Right:
+                                    case FNFSong.NoteType.RRight:
+                                        if (note.Length == 0)
+                                            toWrite[3] = '→';
+                                        else
+                                            toWrite[3] = 'H';
+                                        break;
+                                }
+                                Console.WriteLine(toWrite.ToString());
+                            }
+                            
                             while (notesPlayed != notesToPlay.Count)
                             {
                                 Thread.Sleep(1);
@@ -214,6 +267,9 @@ namespace FNFBot
 
                             Console.WriteLine("Loaded " + song.SongName + " with " + song.Sections.Count + " sections.");
 
+                            crochet = (int)((60 / song.Bpm) * 1000);
+                            stepCrochet = crochet / 4;
+                            
                             Console.WriteLine("Press F1 to start");
                             waitingStart = true;
                         }
