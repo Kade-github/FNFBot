@@ -3,6 +3,13 @@ FNFBot is a [FridayNightFunkin](https://ninja-muffin24.itch.io/funkin) bot that 
 
 I simply did this just because I thought it would be fun.
 
+# WHAT ARE THESE ARROWS IN THE CONSOLE?
+
+These arrows are what the program see's (sometimes notes dont show up but its more or less what it is)
+
+The arrows are, well. Arrows of course.
+`H` repersents a note that must be held.
+
 # Showcase
 [![ytImage](https://img.youtube.com/vi/yFKJskWfiG8/0.jpg)](https://www.youtube.com/watch?v=yFKJskWfiG8)
 
