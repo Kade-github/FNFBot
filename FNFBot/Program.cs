@@ -64,6 +64,9 @@ namespace FNFBot
             };
             kbh.HookKeyboard();
 
+            int crochet = 0;
+            int stepCrochet = 0;
+            
             Console.WriteLine("hooked :>");
             int notesPlayed = 0;
             new Thread(() =>
@@ -282,6 +285,16 @@ namespace FNFBot
             }).Start();
             Application.Run();
             kbh.UnHookKeyboard();
+        }
+        
+        public static bool essentiallyEqual(float a, float b, float epsilon)
+        {
+            return Math.Abs(a - b) <= ( (Math.Abs(a) > Math.Abs(b) ? Math.Abs(b) : Math.Abs(a)) * epsilon);
+        }
+        
+        public static float remapToRange(float value, float start1, float stop1, float start2, float stop2) // stolen from https://github.com/HaxeFlixel/flixel/blob/b38c74b85170d7457353881713a796310187ddd2/flixel/math/FlxMath.hx#L285
+        {
+            return start2 + (value - start1) * ((stop2 - start2) / (stop1 - start1));
         }
 
         [DllImport("user32.dll", SetLastError = true)]
