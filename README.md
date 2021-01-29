@@ -10,6 +10,17 @@ These arrows are what the program see's (sometimes notes dont show up but its mo
 The arrows are, well. Arrows of course.
 `H` repersents a note that must be held.
 
+# PC Requirements
+Yes, this has PC Requirements because some people have a machine that was born in an oven at 365°F and loaded to perfection.
+
+But seriously your pc should at least have:
+
+**8gb+ of ram**
+
+**Windows 10, or a linux distro with mono/wine**
+
+**A good cpu, at least a i5 6th generation+ (and what ever that is in amd terms)**
+
 # Showcase
 [![ytImage](https://img.youtube.com/vi/yFKJskWfiG8/0.jpg)](https://www.youtube.com/watch?v=yFKJskWfiG8)
 
