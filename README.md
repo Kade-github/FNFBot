@@ -1,5 +1,5 @@
 # FNFBot
-FNFBot is a [FridayNightFunkin](https://ninja-muffin24.itch.io/funkin) bot that plays charts with the challenge of not being able to access/modify any of the games memory!
+FNFBot is a [FridayNightFunkin](https://ninja-muffin24.itch.io/funkin) bot that plays charts pretty good.
 
 I simply did this just because I thought it would be fun.
 
