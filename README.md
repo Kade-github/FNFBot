@@ -52,4 +52,6 @@ Here are the issues:
 # Credits
 I used [rqnn's global C# keyboard hook](https://stackoverflow.com/a/46014022) and [Micheal Noonan's Input Simulator](https://github.com/michaelnoonan/inputsimulator) for input and output.
 
+I also now use [memory.dll](https://github.com/erfg12/memory.dll) for hooking into the game
+
 Go give them love.
