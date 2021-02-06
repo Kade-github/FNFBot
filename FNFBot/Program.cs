@@ -210,7 +210,7 @@ namespace FNFBot
                                     if (!playing)
                                         Thread.CurrentThread.Abort();
 
-                                    while (watch.Elapsed.TotalMilliseconds < (double) not.Time - 60) // offset
+                                    while (watch.Elapsed.TotalMilliseconds < (double) not.Time - 55) // offset
                                     {
                                         Thread.Sleep(1);
                                         if (!playing)
