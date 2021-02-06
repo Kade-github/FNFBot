@@ -44,7 +44,8 @@ namespace FNFBot
             bool fpsPlus = false;
             
             Console.WriteLine("Are you using FPSPlus? Y or N (Using fps plus will allow you to use a new feature, auto start.)");
-            if (Console.ReadLine() == "y")
+            string theFPSPlusQuestion = Console.ReadLine()
+            if (theFPSPlusQuestion == "y" || theFPSPlusQuestion == "Y")
                 fpsPlus = true;
             Console.WriteLine("Auto Start: " + fpsPlus);
             
