@@ -22,7 +22,7 @@ But seriously your pc should at least have:
 **A good cpu, at least a i5 6th generation+ (and what ever that is in amd terms)**
 
 # Showcase
-[![ytImage](https://img.youtube.com/vi/yFKJskWfiG8/0.jpg)](https://www.youtube.com/watch?v=yFKJskWfiG8)
+[![ytImage](https://img.youtube.com/vi/j5tuXc9yUCY&t/0.jpg)](https://www.youtube.com/watch?v=j5tuXc9yUCY&t)
 
 # Usage
 To use it, go to the [latest release](https://github.com/KadeDev/FNFBot/releases/latest) and download it.
