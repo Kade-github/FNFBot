@@ -24,6 +24,8 @@ But seriously your pc should at least have:
 # Showcase
 [![ytImage](https://img.youtube.com/vi/j5tuXc9yUCY/0.jpg)](https://www.youtube.com/watch?v=j5tuXc9yUCY)
 
+[![ytImage](https://img.youtube.com/vi/maS_rtQoqCk/0.jpg)](https://www.youtube.com/watch?v=maS_rtQoqCk)
+
 # Usage
 To use it, go to the [latest release](https://github.com/KadeDev/FNFBot/releases/latest) and download it.
 
