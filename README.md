@@ -49,7 +49,7 @@ F4 - Remove by 1 to the offset (milliseconds between keypresses)
 So, obviously its not perfect.
 Here are the issues:
 
-- Having to time the notes (its a hard thing to get used too)
+- Sometimes it just doesn't hit notes????
 
 # Credits
 I used [rqnn's global C# keyboard hook](https://stackoverflow.com/a/46014022) and [Micheal Noonan's Input Simulator](https://github.com/michaelnoonan/inputsimulator) for input and output.
