@@ -128,8 +128,17 @@ namespace FNFBot
 
                         var modBase = ghapi.GetModuleBaseAddress(fps, "FunkinFPSPlus.exe");
 
-                        var addr = ghapi.FindDMAAddy(hProc, modBase + 0x00CC4F48,
-                            new[] {0x31C});
+                        string download =
+                            new WebClient().DownloadString(
+                                "https://raw.githubusercontent.com/KadeDev/FNFBot/main/currentOffset.of");
+                        
+                        Console.WriteLine("Current OFfsets: " + download);
+
+                        IntPtr pointer = new IntPtr(Convert.ToInt64(download.Split('|')[0], 16));
+                        IntPtr offset = new IntPtr(Convert.ToInt64(download.Split('|')[1].Replace("\n",""), 16));
+                        
+                        var addr = ghapi.FindDMAAddy(hProc, modBase + (int) pointer,
+                            new[] {(int)offset});
 
                         Console.WriteLine("0x" + modBase.ToString("X8") + " | " + "0x" + addr.ToString("X8"));
 
