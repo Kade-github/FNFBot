@@ -1,18 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using WindowsInput;
 using WindowsInput.Native;
 using FridayNightFunkin;
+using Memory;
 
 namespace FNFBot
 {
     internal class Program
     {
-        public static int offset = 25;
+        public static int offset = 55;
+        
+        
+        
+        public static IntPtr GetModuleBaseAddress(Process proc, string modName)
+        {
+            IntPtr addr = IntPtr.Zero;
+
+            foreach (ProcessModule m in proc.Modules)
+            {
+                if (m.ModuleName == modName)
+                {
+                    addr = m.BaseAddress;
+                    break;
+                }
+            }
+            return addr;
+        }
         
         [STAThread]
         public static void Main(string[] args)
@@ -20,6 +41,13 @@ namespace FNFBot
             Console.Title = "Init";
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            bool fpsPlus = false;
+            
+            Console.WriteLine("Are you using FPSPlus? Y or N (Using fps plus will allow you to use a new feature, auto start.)");
+            if (Console.ReadLine()?.ToLower() == "y")
+                fpsPlus = true;
+            Console.WriteLine("Auto Start: " + fpsPlus);
             
             Console.WriteLine("Directory: ");
             string dir = Console.ReadLine();
@@ -57,12 +85,99 @@ namespace FNFBot
                         offset--;
                         break;
                     case Keys.F5:
-                        playing = false;
-                        Console.WriteLine("Restarting...");
+                        Console.WriteLine("Auto Start: " + !fpsPlus);
+                        fpsPlus = !fpsPlus;
                         break;
                 }
             };
             kbh.HookKeyboard();
+
+            int crochet = 0;
+            int stepCrochet = 0;
+
+            float currentTime = 0;
+            
+            // Hook FPSPlus to get some gamer data
+            
+            // first lets actually get the process lmao.
+
+            if (fpsPlus)
+            {
+                try
+                {
+                    new Thread(() =>
+                    {
+                        Process[] processes = Process.GetProcesses();
+                        Process fps = null;
+                        foreach (var process in processes)
+                        {
+                            if (process.MainWindowTitle.Contains("Friday Night Funkin' FPS Plus"))
+                            {
+                                fps = process;
+                                Console.WriteLine("Found FPS Plus " + fps.MainWindowTitle);
+                                break; // stop searching
+                            }
+                        }
+
+                        if (fps == null)
+                        {
+                            Console.WriteLine("FPSPlus is not open, auto start is off.");
+                            fpsPlus = false;
+                        }
+
+                        var hProc = ghapi.OpenProcess(ghapi.ProcessAccessFlags.All, false, fps.Id);
+
+                        IntPtr modBase = ghapi.GetModuleBaseAddress(fps, "FunkinFPSPlus.exe");
+
+                        string download =
+                            new WebClient().DownloadString(
+                                "https://raw.githubusercontent.com/KadeDev/FNFBot/main/currentOffset.of");
+                        
+                        Console.WriteLine("Current OFfsets: " + download);
+
+                        IntPtr pointer = new IntPtr(Convert.ToInt64(download.Split('|')[0], 16));
+                        IntPtr offset = new IntPtr(Convert.ToInt64(download.Split('|')[1].Replace("\n",""), 16));
+                        
+                        var addr = ghapi.FindDMAAddy(hProc, modBase + (int) pointer,
+                            new[] {(int)offset});
+
+                        Console.WriteLine("0x" + modBase.ToString("X8") + " | " + "0x" + addr.ToString("X8"));
+
+                        Mem mem = new Mem();
+                        mem.OpenProcess(fps.Id);
+                        
+                        while (true)
+                        {
+                            if (fpsPlus)
+                            {
+                                currentTime = mem.ReadFloat(addr.ToString("X8"));
+                                Console.Title = "FNFBot 1.2 - hi :) " +
+                                                (fpsPlus ? "- Conductor Song Position - " + currentTime : "");
+                                if (currentTime != 0 && waitingStart && !playing)
+                                {
+                                    watch.Reset();
+                                    watch.Start();
+                                    playing = true;
+                                    Console.WriteLine("Started playing...");
+                                }
+                                else if (currentTime == 0 && playing)
+                                {
+                                    watch.Stop();
+                                    playing = false;
+                                    waitingStart = false;
+                                    Console.WriteLine("Stopped!");
+                                }
+                            }
+                        }
+
+                    }).Start();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Error with auto start!");
+                    fpsPlus = false;
+                }
+            }
 
             Console.WriteLine("hooked :>");
             int notesPlayed = 0;
@@ -70,7 +185,6 @@ namespace FNFBot
             {
                 while (true)
                 {
-                    Console.Title = "FNFBot 1.2 - hi :)";
                     if (playing)
                     {
                         section = 0;
@@ -110,7 +224,7 @@ namespace FNFBot
                                     if (!playing)
                                         Thread.CurrentThread.Abort();
 
-                                    while ((decimal) watch.Elapsed.TotalMilliseconds < not.Time)
+                                    while (watch.Elapsed.TotalMilliseconds < (double) not.Time - offset) // offset
                                     {
                                         Thread.Sleep(1);
                                         if (!playing)
@@ -184,7 +298,7 @@ namespace FNFBot
                             Console.Clear();
                             if (notesToPlay.Count == 0)
                                 continue;
-                            Console.WriteLine("Section: " + section + " | Notes: " + notesToPlay.Count + " | Crochet: " + crochet.ToString() + " | Step Crochet: " + stepCrochet.ToString() + " | Sect Started at: " + watch.Elapsed.TotalMilliseconds);
+                            Console.WriteLine("Section: " + section + " | Notes: " + notesToPlay.Count + (fpsPlus ? " | Conductor Song Position - " + currentTime : ""));
                             StringBuilder toWrite = new StringBuilder("    ");
                             float currentNoteTime = float.Parse(notesToPlay.First().Time.ToString());
                             float currentY = 0;
@@ -193,8 +307,8 @@ namespace FNFBot
                                 if (!playing)
                                     break;
                                 float time = float.Parse(note.Time.ToString());
-                                float newcurrentY = remapToRange((float) currentNoteTime, (float) 0,
-                                    (float) 16 * stepCrochet, (float) 0, (float) 0 + 3);
+                                float newcurrentY = remapToRange( currentNoteTime, 0,
+                                    (float) 16 * stepCrochet, 0, 3);
                                 if (currentY < newcurrentY)
                                 {
                                     currentNoteTime = time;
@@ -237,6 +351,7 @@ namespace FNFBot
                             
                             while (notesPlayed != notesToPlay.Count)
                             {
+                                
                                 Thread.Sleep(1);
                                 if (!playing)
                                     break;
@@ -283,7 +398,20 @@ namespace FNFBot
             Application.Run();
             kbh.UnHookKeyboard();
         }
-
+        
+        
+        
+        
+        public static bool essentiallyEqual(float a, float b, float epsilon)
+        {
+            return Math.Abs(a - b) <= ( (Math.Abs(a) > Math.Abs(b) ? Math.Abs(b) : Math.Abs(a)) * epsilon);
+        }
+        
+        public static float remapToRange(float value, float start1, float stop1, float start2, float stop2) // stolen from https://github.com/HaxeFlixel/flixel/blob/b38c74b85170d7457353881713a796310187ddd2/flixel/math/FlxMath.hx#L285
+        {
+            return start2 + (value - start1) * ((stop2 - start2) / (stop1 - start1));
+        }
+        
         [DllImport("user32.dll", SetLastError = true)]
         static extern void keybd_event(byte bVk, byte bScan, int dwFlags, int dwExtraInfo); 
         
@@ -293,7 +421,7 @@ namespace FNFBot
         public static void KeyPress(byte key, byte scan)
         {
             keybd_event(key, scan, KEYEVENTF_EXTENDEDKEY, 0);
-            Thread.Sleep(offset);
+            Thread.Sleep(25);
             keybd_event(key, scan, KEYEVENTF_KEYUP, 0);
         }
     }
