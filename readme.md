@@ -9,6 +9,7 @@ FNFBot is a bot program that lets users automaticly play Friday Night Funkin Cha
 FNFBot has 3 main sections, as shown here.
 ![3Sections](https://i.imgur.com/fwlUZPg.png)
 
+
 The **red** section is where you enter all the data. 
 
 Examples:
