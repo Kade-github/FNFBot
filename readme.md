@@ -28,7 +28,7 @@ Examples:
 - What notes the bot's planning on hitting
 - When the bot completes a song
 
-The **blue** section is where the program tries making a preview of what the notes are, including the length of the notes.
+The **blue** section is where the bot renders the notes that are *probably* there, including the length of held notes.
 
 ### Keybinds
 FNFBot currently has 3 keybinds, and in the future it will have modifyable keybinds.
