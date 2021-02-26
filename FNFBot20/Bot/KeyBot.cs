@@ -22,7 +22,9 @@ namespace FNFBot20
                 if (!File.Exists("bot.settings"))
                     File.WriteAllText("bot.settings", offset.ToString());
                 else
+                {
                     offset = Convert.ToInt32(File.ReadAllText("bot.settings"));
+                }
             }
             catch (Exception e)
             {
@@ -43,10 +45,12 @@ namespace FNFBot20
                     case Keys.F2:
                         offset++;
                         Form1.WriteToConsole("Offset: " + offset);
+                        Form1.offset.Text = "Offset: " + offset;
                         break;
                     case Keys.F3:
                         offset--;
                         Form1.WriteToConsole("Offset: " + offset);
+                        Form1.offset.Text = "Offset: " + offset;
                         break;
                 }
             };

@@ -61,6 +61,8 @@ namespace FNFBot20
             Form1.WriteToConsole("Loaded "  + mBot.song.SongName + " with " + mBot.song.Sections.Count + " sections.");
 
             watch = new Stopwatch();
+            
+            Form1.offset.Text = "Offset: " + kBot.offset;
         }
         
         private int notesPlayed = 0;
@@ -73,7 +75,7 @@ namespace FNFBot20
                 {
                     if (!watch.IsRunning && Playing)
                     {
-                        Form1.watchTime.Text = "";
+                        Form1.watchTime.Text = "Time: 0";
                         watch.Start();
                     }
                     else if (!Playing && watch.IsRunning)
@@ -91,8 +93,11 @@ namespace FNFBot20
 
 
 
+                    int sectionSee = 0;
+
                     foreach (FNFSong.FNFSection sect in mBot.song.Sections)
                     {
+                        sectionSee++;
                         List<FNFSong.FNFNote> notesToPlay = mBot.GetHitNotes(sect);
 
                         foreach (FNFSong.FNFNote n in notesToPlay)
@@ -100,27 +105,35 @@ namespace FNFBot20
                             Thread t = new Thread(() => HandleNote(n));
                             Form1.currentThreads.Add(t);
                             t.Start();
-                            Form1.WriteToConsole("Thread started for note " + n.Time);
                         }
 
                         if (!Playing)
                             break;
 
 
-                        Thread list = new Thread(() => rBot.ListNotes(notesToPlay));
-                        Form1.currentThreads.Add(list);
-                        list.Start();
-                        
-                        while (notesPlayed != notesToPlay.Count)
+                        if (Form1.Rendering)
                         {
-                            Form1.watchTime.Text = watch.Elapsed.TotalSeconds.ToString();
+                            Thread list = new Thread(() => rBot.ListNotes(notesToPlay));
+                            Form1.currentThreads.Add(list);
+                            list.Start();
+                        }
+
+                        while (notesPlayed != notesToPlay.Count && sectionSee == Form1.SectionSee)
+                        {
+                            Form1.watchTime.Text = "Time: " + watch.Elapsed.TotalSeconds.ToString();
                             Thread.Sleep(1);
                             if (!Playing)
                                 break;
                         }
 
-                        notesPlayed = 0;
-                        Form1.console.Text = "";
+                        Form1.WriteToConsole("Section See: " + sectionSee);
+                        
+                        if (sectionSee == Form1.SectionSee)
+                        {
+                            notesPlayed = 0;
+                            Form1.WriteToConsole("---");
+                            sectionSee = 0;
+                        }
                     }
                     Form1.console.Text = "";
                     Playing = false;
@@ -132,6 +145,8 @@ namespace FNFBot20
                 Form1.WriteToConsole("Exception on Play Thread\n" + e);
             }
         }
+
+        private bool[] boolAr = new[] {false, false, false, false};
         
         public void HandleNote(FNFSong.FNFNote n)
         {
@@ -143,66 +158,69 @@ namespace FNFBot20
             }
             
             bool shouldHold = n.Length > 0;
-            
-            switch (n.Type)
+
+            new Thread(() =>
             {
-                case FNFSong.NoteType.Left:
-                case FNFSong.NoteType.RLeft:
-                    if (shouldHold)
-                    {
-                        simulator.Keyboard.KeyDown(VirtualKeyCode.LEFT);
-                        Thread.Sleep(Convert.ToInt32(n.Length));
-                        simulator.Keyboard.KeyUp(VirtualKeyCode.LEFT);
+                switch (n.Type)
+                {
+                    case FNFSong.NoteType.Left:
+                    case FNFSong.NoteType.RLeft:
+                        if (shouldHold)
+                        {
+                            simulator.Keyboard.KeyDown(VirtualKeyCode.LEFT);
+                            Thread.Sleep(Convert.ToInt32(n.Length));
+                            simulator.Keyboard.KeyUp(VirtualKeyCode.LEFT);
+                        }
+                        else
+                        {
+                            kBot.KeyPress(0x44, 0x1e);
+                        }
 
-                    }
-                    else
-                        kBot.KeyPress(0x44, 0x1e);
+                        break;
+                    case FNFSong.NoteType.Down:
+                    case FNFSong.NoteType.RDown:
+                        if (shouldHold)
+                        {
 
-                    break;
-                case FNFSong.NoteType.Down:
-                case FNFSong.NoteType.RDown:
-                    if (shouldHold)
-                    {
+                            simulator.Keyboard.KeyDown(VirtualKeyCode.DOWN);
+                            Thread.Sleep(Convert.ToInt32(n.Length));
+                            simulator.Keyboard.KeyUp(VirtualKeyCode.DOWN);
+                        }
+                        else
+                            kBot.KeyPress(0x46, 0x1f);
 
-                        simulator.Keyboard.KeyDown(VirtualKeyCode.DOWN);
-                        Thread.Sleep(Convert.ToInt32(n.Length));
-                        simulator.Keyboard.KeyUp(VirtualKeyCode.DOWN);
-                    }
-                    else 
-                        kBot.KeyPress(0x46, 0x1f);
+                        break;
+                    case FNFSong.NoteType.Up:
+                    case FNFSong.NoteType.RUp:
+                        if (shouldHold)
+                        {
 
-                    break;
-                case FNFSong.NoteType.Up:
-                case FNFSong.NoteType.RUp:
-                    if (shouldHold)
-                    {
+                            simulator.Keyboard.KeyDown(VirtualKeyCode.UP);
+                            Thread.Sleep(Convert.ToInt32(n.Length));
+                            simulator.Keyboard.KeyUp(VirtualKeyCode.UP);
 
-                        simulator.Keyboard.KeyDown(VirtualKeyCode.UP);
-                        Thread.Sleep(Convert.ToInt32(n.Length));
-                        simulator.Keyboard.KeyUp(VirtualKeyCode.UP);
-
-                    }
-                    else
-                        kBot.KeyPress(0x4A, 0x11);
+                        }
+                        else
+                            kBot.KeyPress(0x4A, 0x11);
 
 
-                    break;
-                case FNFSong.NoteType.Right:
-                case FNFSong.NoteType.RRight:
-                    if (shouldHold)
-                    {
+                        break;
+                    case FNFSong.NoteType.Right:
+                    case FNFSong.NoteType.RRight:
+                        if (shouldHold)
+                        {
 
-                        simulator.Keyboard.KeyDown(VirtualKeyCode.RIGHT);
-                        Thread.Sleep(Convert.ToInt32(n.Length));
-                        simulator.Keyboard.KeyUp(VirtualKeyCode.RIGHT);
+                            simulator.Keyboard.KeyDown(VirtualKeyCode.RIGHT);
+                            Thread.Sleep(Convert.ToInt32(n.Length));
+                            simulator.Keyboard.KeyUp(VirtualKeyCode.RIGHT);
 
-                    }
-                    else
-                        kBot.KeyPress(0x4B, 0x20);
+                        }
+                        else
+                            kBot.KeyPress(0x4B, 0x20);
 
-                    break;
-            }
-
+                        break;
+                }
+            }).Start();
             notesPlayed++;
         }
     }

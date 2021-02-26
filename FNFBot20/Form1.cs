@@ -20,7 +20,16 @@ namespace FNFBot20
 
         public static RichTextBox console { get; set; }
         public static Label watchTime { get; set; }
+        
+        public static Label offset { get; set; }
+        
         public static Panel pnlField { get; set; }
+
+        public static bool Rendering = true;
+
+        public static bool LightShow = false;
+
+        public static int SectionSee = 1;
         
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -35,8 +44,10 @@ namespace FNFBot20
             CheckForIllegalCrossThreadCalls = false;
             bot = new Bot();
             console = rchConsole;
+            offset = label2;
             watchTime = label1;
             pnlField = pnlPlayField;
+            checkBox1.Checked = true;
         }
 
 
@@ -134,5 +145,12 @@ namespace FNFBot20
             ReleaseCapture();
             SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0); 
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            Rendering = checkBox1.Checked;
+            pnlField.Controls.Clear();
+        }
+
     }
 }

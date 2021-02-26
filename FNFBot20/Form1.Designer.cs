@@ -33,6 +33,7 @@
             this.treSngSelect = new System.Windows.Forms.TreeView();
             this.pnlLogo = new System.Windows.Forms.Panel();
             this.pnlTop = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.lblVer = new System.Windows.Forms.Label();
@@ -40,6 +41,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.pnlPlayField = new System.Windows.Forms.Panel();
             this.rchConsole = new System.Windows.Forms.RichTextBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.pnlTop.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,6 +69,7 @@
             // pnlTop
             // 
             this.pnlTop.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (48)))), ((int) (((byte) (51)))), ((int) (((byte) (107)))));
+            this.pnlTop.Controls.Add(this.label2);
             this.pnlTop.Controls.Add(this.label1);
             this.pnlTop.Controls.Add(this.button1);
             this.pnlTop.Controls.Add(this.lblVer);
@@ -77,6 +80,16 @@
             this.pnlTop.TabIndex = 2;
             this.pnlTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pnlTop_MouseDown);
             // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(297, 6);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(194, 21);
+            this.label2.TabIndex = 5;
+            this.label2.Text = "Offset: 25";
+            // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Arial", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
@@ -85,6 +98,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(194, 21);
             this.label1.TabIndex = 4;
+            this.label1.Text = "Time: 0";
             this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.label1_MouseDown);
             // 
             // button1
@@ -143,9 +157,9 @@
             // 
             // pnlPlayField
             // 
-            this.pnlPlayField.Location = new System.Drawing.Point(0, 51);
+            this.pnlPlayField.Location = new System.Drawing.Point(0, 70);
             this.pnlPlayField.Name = "pnlPlayField";
-            this.pnlPlayField.Size = new System.Drawing.Size(160, 271);
+            this.pnlPlayField.Size = new System.Drawing.Size(213, 252);
             this.pnlPlayField.TabIndex = 5;
             // 
             // rchConsole
@@ -153,12 +167,23 @@
             this.rchConsole.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (19)))), ((int) (((byte) (15)))), ((int) (((byte) (64)))));
             this.rchConsole.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.rchConsole.ForeColor = System.Drawing.Color.White;
-            this.rchConsole.Location = new System.Drawing.Point(157, 52);
+            this.rchConsole.Location = new System.Drawing.Point(216, 52);
             this.rchConsole.Name = "rchConsole";
             this.rchConsole.ReadOnly = true;
-            this.rchConsole.Size = new System.Drawing.Size(358, 269);
+            this.rchConsole.Size = new System.Drawing.Size(299, 269);
             this.rchConsole.TabIndex = 6;
             this.rchConsole.Text = "";
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.ForeColor = System.Drawing.Color.White;
+            this.checkBox1.Location = new System.Drawing.Point(3, 52);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(93, 17);
+            this.checkBox1.TabIndex = 7;
+            this.checkBox1.Text = "Render Notes";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
             // 
             // Form1
             // 
@@ -166,6 +191,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int) (((byte) (19)))), ((int) (((byte) (15)))), ((int) (((byte) (64)))));
             this.ClientSize = new System.Drawing.Size(520, 450);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.rchConsole);
             this.Controls.Add(this.pnlPlayField);
             this.Controls.Add(this.button2);
@@ -180,6 +206,10 @@
             this.ResumeLayout(false);
             this.PerformLayout();
         }
+
+        private System.Windows.Forms.Label label2;
+
+        private System.Windows.Forms.CheckBox checkBox1;
 
         private System.Windows.Forms.Label label1;
 

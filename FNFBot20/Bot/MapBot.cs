@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using FridayNightFunkin;
 
 namespace FNFBot20
@@ -18,6 +19,7 @@ namespace FNFBot20
             List<FNFSong.FNFNote> notes = new List<FNFSong.FNFNote>();
             foreach (FNFSong.FNFNote n in sect.Notes)
             {
+                n.Time = Math.Round(n.Time);
                 if (sect.MustHitSection && n.Type < (FNFSong.NoteType) 4)
                     notes.Add(n);
                 else if (n.Type >= (FNFSong.NoteType) 4 && !sect.MustHitSection)
