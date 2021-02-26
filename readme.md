@@ -3,31 +3,35 @@
 
 ### What is FNFBot?
 
-FNFBot is a bot program that lets users automaticly play Friday Night Funkin Charts.
+FNFBot is a bot program that lets users automatically play Friday Night Funkin' charts.
 
 ### How do I use FNFBot?
-FNFBot has 3 main sections, as shown here.
+
+Video Tutorial:
+
+https://www.youtube.com/watch?v=i7pte79xABg&feature=youtu.be&ab_channel=KadeDev
+
+FNFBot has 3 main sections, as shown here:
+
+
 ![3Sections](https://i.imgur.com/fwlUZPg.png)
 
-The **red** section is where you enter all the data. 
 
-Examples:
+The **red** section is where you enter all the data like the game's directory on your computer.
 
-- Your games directory
-- Selecting Songs
 
 The **green** area is the console, this outputs useful information.
 
-Examples
+Examples:
 
 - What happened when you pressed a keybind
-- What notes its planning on hittinh
-- When it completes a song
+- What notes the bot's planning on hitting
+- When the bot completes a song
 
-The **blue** section is where the preview of what the notes *probably* look like.
+The **blue** section is where the bot renders the notes that are *probably* there, including the length of held notes.
 
 ### Keybinds
-FNFBot currently has 3 keybinds, and in the future will have modifyable keybinds.
+FNFBot currently has 3 keybinds, and in the future it will have modifyable keybinds.
 
 Currently the keybinds are as follows:
 
