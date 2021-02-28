@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Threading;
@@ -40,7 +40,7 @@ namespace FNFBot20
                             if (n.Length > 0)
                             {
                                 HeldPart h = new HeldPart(n);
-                                h.Location = new Point(arrow.Location.X + (arrow.Width / 2) -6 , (int) newcurrentY ) ;
+                                h.Location = new Point(arrow.Location.X + (arrow.Width / 2) -6 , (int) newcurrentY - 1 ) ;
                                 if ( Form1.pnlField.InvokeRequired)
                                     Form1.pnlField.BeginInvoke((MethodInvoker) delegate
                                     {
@@ -62,7 +62,7 @@ namespace FNFBot20
                             if (n.Length > 0)
                             {
                                 HeldPart h = new HeldPart(n);
-                                h.Location = new Point(dArrow.Location.X + (dArrow.Width / 2) - 6, (int) newcurrentY);
+                                h.Location = new Point(dArrow.Location.X + (dArrow.Width / 2) - 6, (int) newcurrentY - 1);
                                 if ( Form1.pnlField.InvokeRequired)
                                     Form1.pnlField.BeginInvoke((MethodInvoker) delegate
                                     {
@@ -84,7 +84,7 @@ namespace FNFBot20
                             if (n.Length > 0)
                             {
                                 HeldPart h = new HeldPart(n);
-                                h.Location = new Point(uArrow.Location.X + (uArrow.Width / 2) - 6, (int) newcurrentY);
+                                h.Location = new Point(uArrow.Location.X + (uArrow.Width / 2) - 6, (int) newcurrentY - 1);
                                 if ( Form1.pnlField.InvokeRequired)
                                     Form1.pnlField.BeginInvoke((MethodInvoker) delegate
                                     {
@@ -106,7 +106,7 @@ namespace FNFBot20
                             if (n.Length > 0)
                             {
                                 HeldPart h = new HeldPart(n);
-                                h.Location = new Point(rArrow.Location.X + (rArrow.Width / 2) - 6, (int) newcurrentY);
+                                h.Location = new Point(rArrow.Location.X + (rArrow.Width / 2) - 6, (int) newcurrentY - 1);
 
                                 if (Form1.pnlField.InvokeRequired)
                                 {
