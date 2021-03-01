@@ -173,7 +173,7 @@ namespace FNFBot20
                         }
                         else
                         {
-                            kBot.KeyPress(0x44, 0x1e);
+                            kBot.KeyPress(0x25, 0x1e);
                         }
 
                         break;
@@ -187,7 +187,7 @@ namespace FNFBot20
                             simulator.Keyboard.KeyUp(VirtualKeyCode.DOWN);
                         }
                         else
-                            kBot.KeyPress(0x46, 0x1f);
+                            kBot.KeyPress(0x28, 0x1f);
 
                         break;
                     case FNFSong.NoteType.Up:
@@ -201,7 +201,7 @@ namespace FNFBot20
 
                         }
                         else
-                            kBot.KeyPress(0x4A, 0x11);
+                            kBot.KeyPress(0x26, 0x11);
 
 
                         break;
@@ -216,7 +216,7 @@ namespace FNFBot20
 
                         }
                         else
-                            kBot.KeyPress(0x4B, 0x20);
+                            kBot.KeyPress(0x27, 0x20);
 
                         break;
                 }
