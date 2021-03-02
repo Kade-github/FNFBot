@@ -113,8 +113,7 @@ namespace FNFBot20
             {
                 WriteToConsole("Selecting " + treSngSelect.SelectedNode.Text);
 
-                bot.Load(txtbxDir.Text +
-                         $@"\assets\data\{treSngSelect.SelectedNode.Parent?.Text}\{treSngSelect.SelectedNode.Text}");
+                bot.Load(txtbxDir.Text + @"\assets\data\" + treSngSelect.SelectedNode.Parent.Text + @"\" + treSngSelect.SelectedNode.Text);
             }
             catch (Exception ee)
             {
