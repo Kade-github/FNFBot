@@ -1,6 +1,10 @@
 # FNFBot Rewrite
 ## The better version of FNFBot
 
+### WARNING!
+
+If FNFBot doesn't hit notes perfectly, don't worry, as it doesn't know where to start automatically. You have to press F1 at the right time. So don't create issues telling us that it "hits notes early" or whatever.
+
 ### What is FNFBot?
 
 FNFBot is a bot program that lets users automatically play Friday Night Funkin' charts.
