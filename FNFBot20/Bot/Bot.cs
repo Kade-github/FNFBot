@@ -159,8 +159,7 @@ namespace FNFBot20
             
             bool shouldHold = n.Length > 0;
 
-            new Thread(() =>
-            {
+ 
                 switch (n.Type)
                 {
                     case FNFSong.NoteType.Left:
@@ -220,7 +219,6 @@ namespace FNFBot20
 
                         break;
                 }
-            }).Start();
             notesPlayed++;
         }
     }
