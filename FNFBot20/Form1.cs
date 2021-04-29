@@ -18,12 +18,12 @@ namespace FNFBot20
         public static List<Thread> currentThreads = new List<Thread>();
         public Bot bot { get; set; }
 
-        public static RichTextBox console { get; set; }
-        public static Label watchTime { get; set; }
+        public static RichTextBox Console { get; set; }
+        public static Label WatchTime { get; set; }
         
-        public static Label offset { get; set; }
+        public static Label Offset { get; set; }
         
-        public static Panel pnlField { get; set; }
+        public static Panel PanelField { get; set; }
 
         public static bool Rendering = true;
 
@@ -35,7 +35,7 @@ namespace FNFBot20
         public const int HT_CAPTION = 0x2;
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [DllImportAttribute("user32.dll")]
+        [DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
         
         public Form1()
@@ -43,20 +43,20 @@ namespace FNFBot20
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             bot = new Bot();
-            console = rchConsole;
-            offset = label2;
-            watchTime = label1;
-            pnlField = pnlPlayField;
-            checkBox1.Checked = true;
+            Console = _rchConsole;
+            Offset = _label2;
+            WatchTime = _label1;
+            PanelField = _pnlPlayField;
+            _checkBox1.Checked = true;
         }
 
 
         public static void WriteToConsole(string text)
         {
-            console.Text += "[" + DateTime.Now.ToShortTimeString() + "] " + text + "\n";
+            Console.Text += "[" + DateTime.Now.ToShortTimeString() + "] " + text + "\n";
         }
         
-        private void button1_Click(object sender, EventArgs e)
+        private void ClickButton1(object sender, EventArgs e)
         {
             foreach(Thread t in currentThreads)
                 t.Abort();
@@ -65,21 +65,21 @@ namespace FNFBot20
         }
 
 
-        private void txtbxDir_Enter(object sender, EventArgs e)
+        private void TextBoxDirectoryEnter(object sender, EventArgs e)
         {
-            if (txtbxDir.Text == "FNF Game Directory (ex: C:/Users/user/Documents/FNF)")
-                txtbxDir.Text = "";
+            if (_txtBoxDir.Text == "FNF Game Directory (ex: C:/Users/user/Documents/FNF)")
+                _txtBoxDir.Text = string.Empty;
         }
 
-        private void txtbxDir_Leave(object sender, EventArgs e)
+        private void TextBoxDirectoryLeave(object sender, EventArgs e)
         {
-            if (txtbxDir.Text == "")
-                txtbxDir.Text = "FNF Game Directory (ex: C:/Users/user/Documents/FNF)";
+            if (_txtBoxDir.Text == string.Empty)
+                _txtBoxDir.Text = "FNF Game Directory (ex: C:/Users/user/Documents/FNF)";
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void ClickButton2(object sender, EventArgs e)
         {
-            if (!Directory.Exists(txtbxDir.Text))
+            if (!Directory.Exists(_txtBoxDir.Text))
             {
                 Form1.WriteToConsole("Directory does not exist");
                 return;
@@ -90,13 +90,13 @@ namespace FNFBot20
 
             try
             {
-                foreach (string s in Directory.GetDirectories($@"{txtbxDir.Text}\assets\data"))
+                foreach (string s in Directory.GetDirectories($@"{_txtBoxDir.Text}\assets\data"))
                 {
                     // linq magic
                     // in simple terms, convert a list of files into a TreeNode[],
                     // then make a new TreeNode with the children of the one we made
-                    var children = Directory.GetFiles(s).Select(child => new TreeNode(LeadingPath(child)));
-                    treSngSelect.Nodes.Add(new TreeNode(LeadingPath(s), children.ToArray()));
+                    var children = Directory.GetFiles(s).Select(child => new TreeNode(_leadingPath(child)));
+                    _treSngSelect.Nodes.Add(new TreeNode(_leadingPath(s), children.ToArray()));
                 }
             }
             catch (Exception ee)
@@ -105,51 +105,52 @@ namespace FNFBot20
             }
         }
         
-        private string LeadingPath(string path) => path.Split('\\').Last();
+        private string _leadingPath(string path) => path.Split('\\').Last();
         
-        private void treSngSelect_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void SongSelectNodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             try
             {
-                WriteToConsole("Selecting " + treSngSelect.SelectedNode.Text);
+                WriteToConsole("Selecting " + _treSngSelect.SelectedNode.Text);
 
-                bot.Load(txtbxDir.Text +
-                         $@"\assets\data\{treSngSelect.SelectedNode.Parent?.Text}\{treSngSelect.SelectedNode.Text}");
+                bot.Load(_txtBoxDir.Text +
+                         $@"\assets\data\{_treSngSelect.SelectedNode.Parent?.Text}\{_treSngSelect.SelectedNode.Text}");
             }
             catch (Exception ee)
             {
                 WriteToConsole("Failed to select map.\n" + e);
+                WriteToConsole($"Exception => {ee}");
             }
         }
 
-        private void pnlTop_MouseDown(object sender, MouseEventArgs e)
+        private void PanelTopMouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0); 
         }
 
-        private void lblVer_MouseDown(object sender, MouseEventArgs e)
+        private void LblVerMouseDown(object sender, MouseEventArgs e)
         {
              ReleaseCapture();
              SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0); 
         }
 
-        private void pnlLogo_MouseDown(object sender, MouseEventArgs e)
+        private void PanelLogoMouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0); 
         }
 
-        private void label1_MouseDown(object sender, MouseEventArgs e)
+        private void Label1MouseDown(object sender, MouseEventArgs e)
         {
             ReleaseCapture();
             SendMessage(this.Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0); 
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void CheckBox1CheckChanged(object sender, EventArgs e)
         {
-            Rendering = checkBox1.Checked;
-            pnlField.Controls.Clear();
+            Rendering = _checkBox1.Checked;
+            PanelField.Controls.Clear();
         }
 
     }

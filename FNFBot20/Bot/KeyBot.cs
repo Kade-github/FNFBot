@@ -10,13 +10,13 @@ namespace FNFBot20
    
     public class KeyBot
     {
-        public LowLevelKeyboardHook kHook { get; set; }
+        public LowLevelKeyboardHook KeyboardHook { get; set; }
 
         public int offset = 25;
         
         public KeyBot()
         {
-            kHook = new LowLevelKeyboardHook();
+            KeyboardHook = new LowLevelKeyboardHook();
             try
             {
                 if (!File.Exists("bot.settings"))
@@ -34,7 +34,7 @@ namespace FNFBot20
 
         public void InitHooks()
         {
-            kHook.OnKeyPressed += (sender, keys) =>
+            KeyboardHook.OnKeyPressed += (sender, keys) =>
             {
                 switch (keys)
                 {
@@ -45,22 +45,22 @@ namespace FNFBot20
                     case Keys.F2:
                         offset++;
                         Form1.WriteToConsole("Offset: " + offset);
-                        Form1.offset.Text = "Offset: " + offset;
+                        Form1.Offset.Text = "Offset: " + offset;
                         break;
                     case Keys.F3:
                         offset--;
                         Form1.WriteToConsole("Offset: " + offset);
-                        Form1.offset.Text = "Offset: " + offset;
+                        Form1.Offset.Text = "Offset: " + offset;
                         break;
                 }
             };
-            kHook.HookKeyboard();
+            KeyboardHook.HookKeyboard();
         }
 
 
         public void StopHooks()
         {
-            kHook.UnHookKeyboard();
+            KeyboardHook.UnHookKeyboard();
         }
         
         [DllImport("user32.dll", SetLastError = true)]

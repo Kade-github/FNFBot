@@ -7,11 +7,11 @@ namespace FNFBot20
     public class MapBot
     {
         
-        public FNFSong song { get; set; }
+        public FNFSong Song { get; set; }
         
         public MapBot(string songDir)
         {
-            song = new FNFSong(songDir);
+            Song = new FNFSong(songDir);
         }
 
         public List<FNFSong.FNFNote> GetHitNotes(FNFSong.FNFSection sect)
@@ -31,7 +31,7 @@ namespace FNFBot20
         
         public void Compile(string path)
         {
-            song.SaveSong(path);
+            Song.SaveSong(path);
         }
     }
 }

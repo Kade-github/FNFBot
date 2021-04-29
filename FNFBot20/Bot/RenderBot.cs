@@ -11,25 +11,25 @@ namespace FNFBot20
     public class RenderBot
     {
 
-        public static float stepCrochet { get; set; }
+        public static float StepCrochet { get; set; }
 
         public RenderBot(float bpm)
         {
             var crochet = (float)(60 / bpm * 1000);
-            stepCrochet = (float) (crochet / 4); 
+            StepCrochet = (float) (crochet / 4); 
         }
         
         public void ListNotes(List<FNFSong.FNFNote> notes)
         {
             try
             {
-                if (Form1.pnlField.InvokeRequired)
-                    Form1.pnlField.BeginInvoke((MethodInvoker) delegate { Form1.pnlField.Controls.Clear();});
+                if (Form1.PanelField.InvokeRequired)
+                    Form1.PanelField.BeginInvoke((MethodInvoker) delegate { Form1.PanelField.Controls.Clear();});
 
                 foreach (FNFSong.FNFNote n in notes)
                 {
                     double newcurrentY = Math.Floor(remapToRange(float.Parse(n.Time.ToString()), 0,
-                        (float) 16 * stepCrochet, 0, Form1.pnlField.Height)) % Form1.pnlField.Height;
+                        (float) 16 * StepCrochet, 0, Form1.PanelField.Height)) % Form1.PanelField.Height;
                     
                     switch (n.Type)
                     {
@@ -41,17 +41,17 @@ namespace FNFBot20
                             {
                                 HeldPart h = new HeldPart(n);
                                 h.Location = new Point(arrow.Location.X + (arrow.Width / 2) -6 , (int) newcurrentY ) ;
-                                if ( Form1.pnlField.InvokeRequired)
-                                    Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                                if ( Form1.PanelField.InvokeRequired)
+                                    Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                                     {
-                                        Form1.pnlField.Controls.Add(h);
+                                        Form1.PanelField.Controls.Add(h);
                                         h.SendToBack();
                                     });
                             }
-                            if ( Form1.pnlField.InvokeRequired)
-                             Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                            if ( Form1.PanelField.InvokeRequired)
+                             Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                              {
-                                 Form1.pnlField.Controls.Add(arrow);
+                                 Form1.PanelField.Controls.Add(arrow);
                                  arrow.BringToFront();
                              });
                             break;
@@ -63,17 +63,17 @@ namespace FNFBot20
                             {
                                 HeldPart h = new HeldPart(n);
                                 h.Location = new Point(dArrow.Location.X + (dArrow.Width / 2) - 6, (int) newcurrentY);
-                                if ( Form1.pnlField.InvokeRequired)
-                                    Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                                if ( Form1.PanelField.InvokeRequired)
+                                    Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                                     {
-                                        Form1.pnlField.Controls.Add(h);
+                                        Form1.PanelField.Controls.Add(h);
                                         h.SendToBack();
                                     });
                             }
-                            if ( Form1.pnlField.InvokeRequired)
-                                Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                            if ( Form1.PanelField.InvokeRequired)
+                                Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                                 {
-                                    Form1.pnlField.Controls.Add(dArrow);
+                                    Form1.PanelField.Controls.Add(dArrow);
                                     dArrow.BringToFront();
                                 });
                             break;
@@ -85,17 +85,17 @@ namespace FNFBot20
                             {
                                 HeldPart h = new HeldPart(n);
                                 h.Location = new Point(uArrow.Location.X + (uArrow.Width / 2) - 6, (int) newcurrentY);
-                                if ( Form1.pnlField.InvokeRequired)
-                                    Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                                if ( Form1.PanelField.InvokeRequired)
+                                    Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                                     {
-                                        Form1.pnlField.Controls.Add(h);
+                                        Form1.PanelField.Controls.Add(h);
                                         h.SendToBack();
                                     });
                             }
-                            if ( Form1.pnlField.InvokeRequired)
-                                Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                            if ( Form1.PanelField.InvokeRequired)
+                                Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                                 {
-                                    Form1.pnlField.Controls.Add(uArrow);
+                                    Form1.PanelField.Controls.Add(uArrow);
                                     uArrow.BringToFront();
                                 });
                             break;
@@ -108,19 +108,19 @@ namespace FNFBot20
                                 HeldPart h = new HeldPart(n);
                                 h.Location = new Point(rArrow.Location.X + (rArrow.Width / 2) - 6, (int) newcurrentY);
 
-                                if (Form1.pnlField.InvokeRequired)
+                                if (Form1.PanelField.InvokeRequired)
                                 {
-                                    Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                                    Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                                     {
-                                        Form1.pnlField.Controls.Add(h);
+                                        Form1.PanelField.Controls.Add(h);
                                         h.SendToBack();
                                     });
                                 }
                             }
-                            if ( Form1.pnlField.InvokeRequired)
-                                Form1.pnlField.BeginInvoke((MethodInvoker) delegate
+                            if ( Form1.PanelField.InvokeRequired)
+                                Form1.PanelField.BeginInvoke((MethodInvoker) delegate
                                 {
-                                    Form1.pnlField.Controls.Add(rArrow); 
+                                    Form1.PanelField.Controls.Add(rArrow); 
                                     rArrow.BringToFront();
                                 });
                             break;

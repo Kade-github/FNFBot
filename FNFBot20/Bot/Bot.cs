@@ -13,16 +13,16 @@ namespace FNFBot20
     {
         public static bool Playing = false;
         
-        public static Stopwatch watch { get; set; }
+        public static Stopwatch Watch { get; set; }
         
-        public string sngDir { get; set; }
+        public string SongDirectory { get; set; }
         public KeyBot kBot;
         public MapBot mBot;
         public RenderBot rBot;
 
         public InputSimulator simulator = new InputSimulator();
         
-        public Thread currentPlayThread { get; set; }
+        public Thread CurrentPlayThread { get; set; }
         
         public Bot()
         {
@@ -41,31 +41,31 @@ namespace FNFBot20
                 return;
             }
 
-            currentPlayThread?.Abort();
-            Form1.currentThreads?.Remove(currentPlayThread);
+            CurrentPlayThread?.Abort();
+            Form1.currentThreads?.Remove(CurrentPlayThread);
 
-            sngDir = songDirectory;
+            SongDirectory = songDirectory;
             
             // basic loading
             // get a FNFSong through map bot
             mBot = new MapBot(songDirectory);
 
             // Create the render bot (renders notes to the screen)
-            rBot = new RenderBot((int) mBot.song.Bpm);
+            rBot = new RenderBot((int) mBot.Song.Bpm);
             
-            currentPlayThread = new Thread(PlayThread);
-            currentPlayThread.Start();
+            CurrentPlayThread = new Thread(PlayThread);
+            CurrentPlayThread.Start();
             
-            Form1.currentThreads?.Add(currentPlayThread);
+            Form1.currentThreads?.Add(CurrentPlayThread);
             
-            Form1.WriteToConsole("Loaded "  + mBot.song.SongName + " with " + mBot.song.Sections.Count + " sections.");
+            Form1.WriteToConsole("Loaded "  + mBot.Song.SongName + " with " + mBot.Song.Sections.Count + " sections.");
 
-            watch = new Stopwatch();
+            Watch = new Stopwatch();
             
-            Form1.offset.Text = "Offset: " + kBot.offset;
+            Form1.Offset.Text = "Offset: " + kBot.offset;
         }
         
-        private int notesPlayed = 0;
+        private int _notesPlayed = 0;
         private void PlayThread()
         {
             Form1.WriteToConsole("Play Thread created...");
@@ -73,15 +73,15 @@ namespace FNFBot20
             {
                 while (true)
                 {
-                    if (!watch.IsRunning && Playing)
+                    if (!Watch.IsRunning && Playing)
                     {
-                        Form1.watchTime.Text = "Time: 0";
-                        watch.Start();
+                        Form1.WatchTime.Text = "Time: 0";
+                        Watch.Start();
                     }
-                    else if (!Playing && watch.IsRunning)
+                    else if (!Playing && Watch.IsRunning)
                     {
-                        Form1.console.Text = "";
-                        watch.Reset();
+                        Form1.Console.Text = "";
+                        Watch.Reset();
                     }
 
 
@@ -95,7 +95,7 @@ namespace FNFBot20
 
                     int sectionSee = 0;
 
-                    foreach (FNFSong.FNFSection sect in mBot.song.Sections)
+                    foreach (FNFSong.FNFSection sect in mBot.Song.Sections)
                     {
                         sectionSee++;
                         List<FNFSong.FNFNote> notesToPlay = mBot.GetHitNotes(sect);
@@ -118,9 +118,9 @@ namespace FNFBot20
                             list.Start();
                         }
 
-                        while (notesPlayed != notesToPlay.Count && sectionSee == Form1.SectionSee)
+                        while (_notesPlayed != notesToPlay.Count && sectionSee == Form1.SectionSee)
                         {
-                            Form1.watchTime.Text = "Time: " + watch.Elapsed.TotalSeconds.ToString();
+                            Form1.WatchTime.Text = "Time: " + Watch.Elapsed.TotalSeconds.ToString();
                             Thread.Sleep(1);
                             if (!Playing)
                                 break;
@@ -130,12 +130,12 @@ namespace FNFBot20
                         
                         if (sectionSee == Form1.SectionSee)
                         {
-                            notesPlayed = 0;
+                            _notesPlayed = 0;
                             Form1.WriteToConsole("---");
                             sectionSee = 0;
                         }
                     }
-                    Form1.console.Text = "";
+                    Form1.Console.Text = "";
                     Playing = false;
                     Form1.WriteToConsole("Completed!");
                 }
@@ -146,11 +146,11 @@ namespace FNFBot20
             }
         }
 
-        private bool[] boolAr = new[] {false, false, false, false};
+        private bool[] _booleanArray = new[] {false, false, false, false};
         
         public void HandleNote(FNFSong.FNFNote n)
         {
-            while (watch.Elapsed.TotalMilliseconds < (double) n.Time - kBot.offset)
+            while (Watch.Elapsed.TotalMilliseconds < (double) n.Time - kBot.offset)
             {
                 Thread.Sleep(1);
                 if (!Playing)
@@ -219,7 +219,7 @@ namespace FNFBot20
 
                         break;
                 }
-            notesPlayed++;
+            _notesPlayed++;
         }
     }
 }

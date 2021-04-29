@@ -18,7 +18,7 @@ namespace FNFDataManager.Assets
 
             
             
-            for (float i = 0; i <= (double) note.Length; i += RenderBot.stepCrochet / 2)
+            for (float i = 0; i <= (double) note.Length; i += RenderBot.StepCrochet / 2)
             {
                 bool end = false;
                 foreach (Panel pa in Controls)
@@ -37,7 +37,7 @@ namespace FNFDataManager.Assets
                 {
                     case FNFSong.NoteType.Down:
                     case FNFSong.NoteType.RDown:
-                        if (i + RenderBot.stepCrochet / 2 > (double) note.Length)
+                        if (i + RenderBot.StepCrochet / 2 > (double) note.Length)
                         {
                             p.BackgroundImage = global::FNFBot20.Properties.Resources.blueEnd;
                             p.Name += "END";
@@ -47,7 +47,7 @@ namespace FNFDataManager.Assets
                         break;
                     case FNFSong.NoteType.Right:
                     case FNFSong.NoteType.RRight:
-                        if (i + RenderBot.stepCrochet / 2 > (double) note.Length)
+                        if (i + RenderBot.StepCrochet / 2 > (double) note.Length)
                         {
                             p.BackgroundImage = global::FNFBot20.Properties.Resources.redEnd;
                             p.Name += "END";
@@ -57,7 +57,7 @@ namespace FNFDataManager.Assets
                         break;
                     case FNFSong.NoteType.Left:
                     case FNFSong.NoteType.RLeft:
-                        if (i + RenderBot.stepCrochet / 2 > (double) note.Length)
+                        if (i + RenderBot.StepCrochet / 2 > (double) note.Length)
                         {
                             p.BackgroundImage = global::FNFBot20.Properties.Resources.purpleEnd;
                             p.Name += "END";
@@ -67,7 +67,7 @@ namespace FNFDataManager.Assets
                         break;
                     case FNFSong.NoteType.Up:
                     case FNFSong.NoteType.RUp:
-                        if (i + RenderBot.stepCrochet / 2 > (double) note.Length)
+                        if (i + RenderBot.StepCrochet / 2 > (double) note.Length)
                         {
                             p.BackgroundImage = global::FNFBot20.Properties.Resources.greenEnd;
                             p.Name += "END";
