@@ -146,7 +146,7 @@ namespace FNFBot20
             }
         }
 
-        private bool[] _booleanArray = new[] {false, false, false, false};
+        private readonly bool[] _booleanArray = new[] {false, false, false, false};
         
         public void HandleNote(FNFSong.FNFNote n)
         {

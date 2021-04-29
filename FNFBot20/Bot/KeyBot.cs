@@ -82,7 +82,8 @@ namespace FNFBot20
      // LowLevelKeyboard Hook created by https://stackoverflow.com/a/46014022
     public class LowLevelKeyboardHook
     {
-        private const int WH_KEYBOARD_LL = 13;
+        
+        const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_SYSKEYDOWN = 0x0104;
         private const int WM_KEYUP = 0x101;

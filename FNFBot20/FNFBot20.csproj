@@ -57,7 +57,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\DownArrow.cs" />
+    <Compile Include="Assets\DownArrow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Assets\DownArrow.Designer.cs" />
     <Compile Include="Assets\HeldPart.cs">
       <SubType>UserControl</SubType>
@@ -65,11 +67,17 @@
     <Compile Include="Assets\HeldPart.Designer.cs">
       <DependentUpon>HeldPart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Assets\LeftArrow.cs" />
+    <Compile Include="Assets\LeftArrow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Assets\LeftArrow.Designer.cs" />
-    <Compile Include="Assets\RightArrow.cs" />
+    <Compile Include="Assets\RightArrow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Assets\RightArrow.Designer.cs" />
-    <Compile Include="Assets\UpArrow.cs" />
+    <Compile Include="Assets\UpArrow.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Assets\UpArrow.Designer.cs" />
     <Compile Include="Bot\Bot.cs" />
     <Compile Include="Bot\KeyBot.cs" />
@@ -101,6 +109,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
