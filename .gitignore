@@ -1,0 +1,8 @@
+# Editors
+.vscode/
+
+#For the one werido who uses subverison in 2021 (cringe)
+.svn/
+
+#Ds store thing on macs
+.DS_Store
