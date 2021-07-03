@@ -1,3 +1,18 @@
+**Making an issue**
+Before making your issue, read everything in this file.
+
+**Things to include in your issue**
+(Understandable) description of the issue
+Images/Videos
+
+**Things to NOT DO in your issue**
+Make duplicates of the issue.
+Not close the issue after a reasonable solution has been found.
+Talk about random bullshit.
+Talk about common issues (counts as duplicates).
+Talk about not finding a release.
+Not adding images or videos.
+
 ---
 name: Bug report
 about: Create a report to help us improve
