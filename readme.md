@@ -1,6 +1,9 @@
 # FNFBot Rewrite
 ## The better version of FNFBot
 
+### FOR PR AND ISSUE REVIEWERS:
+After an issue has been resolved, if you can, close the issue, if you can't, try to ask Kade.
+
 ### WARNING!
 
 If FNFBot doesn't hit notes perfectly, don't worry, as it doesn't know where to start automatically. You have to press F1 at the right time. So don't create issues telling us that it "hits notes early" or whatever.
