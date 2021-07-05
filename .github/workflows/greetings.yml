@@ -1,0 +1,16 @@
+name: Greetings
+
+on: [pull_request, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: "Welcome to making issues on the FNFBot repo. Don't be stupid. Download the release and not the source code to use the bot."
+        pr-message: "Wow you made a pull request, you're not a github noob. Anyway same thing as issues, don't make stupid issues that don't contribute anything"
