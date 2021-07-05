@@ -1,0 +1,9 @@
+github: 
+- .github/**/*
+source:
+- FNFBot20/**/*
+- packages/**/*
+- FNFBot20.sln
+- FNFBot20.sln.DotSettings.user
+markdown:
+- *.md
