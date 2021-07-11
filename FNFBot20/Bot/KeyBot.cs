@@ -37,8 +37,9 @@ namespace FNFBot20
             kHook.OnKeyPressed += (sender, keys) =>
             {
                 switch (keys)
+                   
                 {
-                    case Keys.F1:
+                    case Keys.F5:
                         Bot.Playing = !Bot.Playing;
                         Form1.WriteToConsole("Playing: " + Bot.Playing);
                         break;
