@@ -9,6 +9,8 @@ If FNFBot doesn't hit notes perfectly, don't worry, as it doesn't know where to 
 
 FNFBot is a bot program that lets users automatically play Friday Night Funkin' charts.
 
+### !!! NOT COMPATIBLE WITH [PSYCH ENGINE](https://github.com/ShadowMario/FNF-PsychEngine) !!!
+
 ### How do I use FNFBot?
 
 Video Tutorial:
