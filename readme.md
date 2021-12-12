@@ -13,10 +13,6 @@ FNFBot is a bot program that lets users automatically play Friday Night Funkin' 
 
 ### How do I use FNFBot?
 
-Video Tutorial:
-
-https://www.youtube.com/watch?v=i7pte79xABg&feature=youtu.be&ab_channel=KadeDev
-
 FNFBot has 3 main sections, as shown here:
 
 
