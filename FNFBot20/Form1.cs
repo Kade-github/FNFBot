@@ -16,7 +16,9 @@ namespace FNFBot20
     public partial class Form1 : Form
     {
         public static List<Thread> currentThreads = new List<Thread>();
-        public Bot bot { get; set; }
+        public static Bot bot { get; set; }
+
+        public static Form1 instance;
 
         public static RichTextBox console { get; set; }
         public static Label watchTime { get; set; }
@@ -40,6 +42,7 @@ namespace FNFBot20
         
         public Form1()
         {
+            instance = this;
             InitializeComponent();
             CheckForIllegalCrossThreadCalls = false;
             bot = new Bot();
@@ -90,14 +93,27 @@ namespace FNFBot20
 
             try
             {
-                foreach (string s in Directory.GetDirectories($@"{txtbxDir.Text}\assets\data"))
+                // 1.8
+                if (Directory.Exists($@"{txtbxDir.Text}\assets\data\songs"))
                 {
-                    // linq magic
-                    // in simple terms, convert a list of files into a TreeNode[],
-                    // then make a new TreeNode with the children of the one we made
-                    var children = Directory.GetFiles(s).Select(child => new TreeNode(LeadingPath(child)));
-                    treSngSelect.Nodes.Add(new TreeNode(LeadingPath(s), children.ToArray()));
+                    foreach (string s in Directory.GetDirectories($@"{txtbxDir.Text}\assets\data\songs"))
+                    {
+                        // linq magic
+                        // in simple terms, convert a list of files into a TreeNode[],
+                        // then make a new TreeNode with the children of the one we made
+                        var children = Directory.GetFiles(s).Select(child => new TreeNode(LeadingPath(child)));
+                        treSngSelect.Nodes.Add(new TreeNode(LeadingPath(s), children.ToArray()));
+                    }
                 }
+                else
+                    foreach (string s in Directory.GetDirectories($@"{txtbxDir.Text}\assets\data"))
+                    {
+                        // linq magic
+                        // in simple terms, convert a list of files into a TreeNode[],
+                        // then make a new TreeNode with the children of the one we made
+                        var children = Directory.GetFiles(s).Select(child => new TreeNode(LeadingPath(child)));
+                        treSngSelect.Nodes.Add(new TreeNode(LeadingPath(s), children.ToArray()));
+                    }
             }
             catch (Exception ee)
             {
@@ -109,17 +125,16 @@ namespace FNFBot20
         
         private void treSngSelect_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            try
-            {
-                WriteToConsole("Selecting " + treSngSelect.SelectedNode.Text);
+            WriteToConsole("Selecting " + treSngSelect.SelectedNode.Text);
 
-                bot.Load(txtbxDir.Text +
-                         $@"\assets\data\{treSngSelect.SelectedNode.Parent?.Text}\{treSngSelect.SelectedNode.Text}");
-            }
-            catch (Exception ee)
-            {
-                WriteToConsole("Failed to select map.\n" + e);
-            }
+            Play();
+        }
+
+        public void Play()
+        {
+            
+            bot.Load(txtbxDir.Text +
+                     $@"\assets\data\{(Directory.Exists(txtbxDir.Text + @"\assets\data\songs") ? "songs\\" : "")}{treSngSelect.SelectedNode.Parent?.Text}\{treSngSelect.SelectedNode.Text}");
         }
 
         private void pnlTop_MouseDown(object sender, MouseEventArgs e)

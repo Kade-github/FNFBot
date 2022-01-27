@@ -41,6 +41,8 @@ namespace FNFBot20
                     case Keys.F1:
                         Bot.Playing = !Bot.Playing;
                         Form1.WriteToConsole("Playing: " + Bot.Playing);
+                        if (Bot.ended)
+                            Form1.instance.Play();
                         break;
                     case Keys.F2:
                         offset++;

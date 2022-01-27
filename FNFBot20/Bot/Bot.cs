@@ -16,10 +16,16 @@ namespace FNFBot20
         public static Stopwatch watch { get; set; }
         
         public string sngDir { get; set; }
+
+        public static bool ended = false;
         public KeyBot kBot;
         public MapBot mBot;
         public RenderBot rBot;
 
+        public float[] holdTimes = {0,0,0,0};
+
+        public List<FNFSong.FNFNote> nPlay = new List<FNFSong.FNFNote>();
+        
         public InputSimulator simulator = new InputSimulator();
         
         public Thread currentPlayThread { get; set; }
@@ -68,7 +74,12 @@ namespace FNFBot20
         private int notesPlayed = 0;
         private void PlayThread()
         {
+            ended = false;
             Form1.WriteToConsole("Play Thread created...");
+            nPlay.Clear();
+            int currentSect = 0;
+            int notesPPlayed = 0;
+            int lastRendered = 0;
             try
             {
                 while (true)
@@ -92,53 +103,92 @@ namespace FNFBot20
                     }
 
 
+                    
+                    int i = 0;
 
-                    int sectionSee = 0;
-
-                    foreach (FNFSong.FNFSection sect in mBot.song.Sections)
+                    
+                    
+                    FNFSong.FNFSection sect = mBot.song.Sections[currentSect];
+                    
+                    if (notesPPlayed >= sect.Notes.Count)
                     {
-                        sectionSee++;
-                        List<FNFSong.FNFNote> notesToPlay = mBot.GetHitNotes(sect);
+                        currentSect++;
+                        notesPPlayed = 0;
+                        sect = mBot.song.Sections[currentSect];
+                        Form1.WriteToConsole("Next section!");
+                    }
+                    
+                    List<FNFSong.FNFNote> notesToPlay = mBot.GetHitNotes(sect);
 
-                        foreach (FNFSong.FNFNote n in notesToPlay)
-                        {
-                            Thread t = new Thread(() => HandleNote(n));
-                            Form1.currentThreads.Add(t);
-                            t.Start();
-                        }
-
-                        if (!Playing)
-                            break;
-
-
+                    if (notesToPlay.Count == 0)
+                    {
+                        currentSect++;
+                        Form1.WriteToConsole("Skiping to section " + currentSect);
+                    }
+                    else if (lastRendered != currentSect)
+                    {
+                        lastRendered = currentSect;
                         if (Form1.Rendering)
                         {
-                            Thread list = new Thread(() => rBot.ListNotes(notesToPlay));
+                            Form1.watchTime.Text = "Time: " + watch.Elapsed.TotalSeconds.ToString();
+                            Thread list = new Thread(() => rBot.ListNotes(mBot.GetHitNotes(sect)));
                             Form1.currentThreads.Add(list);
                             list.Start();
                         }
+                    }
 
-                        while (notesPlayed != notesToPlay.Count && sectionSee == Form1.SectionSee)
+                    foreach (FNFSong.FNFNote n in notesToPlay)
+                    {
+
+                        // ke default hit windows or something like em
+
+                        if ((float)watch.Elapsed.TotalMilliseconds + kBot.offset >= (double) (n.Time - 22) && !nPlay.Contains(n))
                         {
-                            Form1.watchTime.Text = "Time: " + watch.Elapsed.TotalSeconds.ToString();
-                            Thread.Sleep(1);
-                            if (!Playing)
-                                break;
+                            HandleNote(n);
+                            nPlay.Add(n);
+                            notesPPlayed++;
                         }
 
-                        Form1.WriteToConsole("Section See: " + sectionSee);
-                        
-                        if (sectionSee == Form1.SectionSee)
+                        i++;
+
+                    }
+                    
+                    // check if we should let go of holds
+                    
+                    for (int ii = 0; ii < 4; ii++)
+                    {
+                        if (watch.ElapsedMilliseconds > holdTimes[ii] && holdTimes[ii] != 0)
                         {
-                            notesPlayed = 0;
-                            Form1.WriteToConsole("---");
-                            sectionSee = 0;
+                            holdTimes[ii] = 0;
+                            switch (ii)
+                            {
+                                case 0:
+                                    simulator.Keyboard.KeyUp(VirtualKeyCode.LEFT);
+                                    break;
+                                case 1:
+                                    simulator.Keyboard.KeyUp(VirtualKeyCode.DOWN);
+                                    break;
+                                case 2:
+                                    simulator.Keyboard.KeyUp(VirtualKeyCode.UP);
+                                    break;
+                                case 3:
+                                    simulator.Keyboard.KeyUp(VirtualKeyCode.RIGHT);
+                                    break;
+                            }
                         }
                     }
-                    Form1.console.Text = "";
-                    Playing = false;
-                    Form1.WriteToConsole("Completed!");
+
+                    if (!Playing)
+                        break;
+                    
+
+                    // Form1.WriteToConsole("Section See: " + sectionSee);
+                    notesPlayed = 0;
                 }
+                Form1.console.Text = "";
+                Playing = false;
+                Form1.WriteToConsole("Completed!");
+                ended = true;
             }
             catch (Exception e)
             {
@@ -150,77 +200,62 @@ namespace FNFBot20
         
         public void HandleNote(FNFSong.FNFNote n)
         {
-            while (watch.Elapsed.TotalMilliseconds < (double) n.Time - kBot.offset)
-            {
-                Thread.Sleep(1);
-                if (!Playing)
-                    Thread.CurrentThread.Abort();
-            }
-            
             bool shouldHold = n.Length > 0;
-
-            new Thread(() =>
+            if (shouldHold)
+                holdTimes[(int)n.Type % 4] = ((float)n.Length + (float)watch.Elapsed.TotalMilliseconds) + 10;
+            
+            switch (n.Type)
             {
-                switch (n.Type)
-                {
-                    case FNFSong.NoteType.Left:
-                    case FNFSong.NoteType.RLeft:
-                        if (shouldHold)
-                        {
-                            simulator.Keyboard.KeyDown(VirtualKeyCode.LEFT);
-                            Thread.Sleep(Convert.ToInt32(n.Length));
-                            simulator.Keyboard.KeyUp(VirtualKeyCode.LEFT);
-                        }
-                        else
-                        {
-                            kBot.KeyPress(0x25, 0x1e);
-                        }
+                case FNFSong.NoteType.Left:
+                case FNFSong.NoteType.RLeft:
+                    if (shouldHold)
+                    {
+                        simulator.Keyboard.KeyDown(VirtualKeyCode.LEFT);
+                            
+                    }
+                    else
+                    {
+                        kBot.KeyPress(0x25, 0x1e);
+                    }
 
-                        break;
-                    case FNFSong.NoteType.Down:
-                    case FNFSong.NoteType.RDown:
-                        if (shouldHold)
-                        {
+                    break;
+                case FNFSong.NoteType.Down:
+                case FNFSong.NoteType.RDown:
+                    if (shouldHold)
+                    {
 
-                            simulator.Keyboard.KeyDown(VirtualKeyCode.DOWN);
-                            Thread.Sleep(Convert.ToInt32(n.Length));
-                            simulator.Keyboard.KeyUp(VirtualKeyCode.DOWN);
-                        }
-                        else
-                            kBot.KeyPress(0x28, 0x1f);
+                        simulator.Keyboard.KeyDown(VirtualKeyCode.DOWN);
+                    }
+                    else
+                        kBot.KeyPress(0x28, 0x1f);
 
-                        break;
-                    case FNFSong.NoteType.Up:
-                    case FNFSong.NoteType.RUp:
-                        if (shouldHold)
-                        {
+                    break;
+                case FNFSong.NoteType.Up:
+                case FNFSong.NoteType.RUp:
+                    if (shouldHold)
+                    {
 
-                            simulator.Keyboard.KeyDown(VirtualKeyCode.UP);
-                            Thread.Sleep(Convert.ToInt32(n.Length));
-                            simulator.Keyboard.KeyUp(VirtualKeyCode.UP);
+                        simulator.Keyboard.KeyDown(VirtualKeyCode.UP);
 
-                        }
-                        else
-                            kBot.KeyPress(0x26, 0x11);
+                    }
+                    else
+                        kBot.KeyPress(0x26, 0x11);
 
 
-                        break;
-                    case FNFSong.NoteType.Right:
-                    case FNFSong.NoteType.RRight:
-                        if (shouldHold)
-                        {
+                    break;
+                case FNFSong.NoteType.Right:
+                case FNFSong.NoteType.RRight:
+                    if (shouldHold)
+                    {
 
-                            simulator.Keyboard.KeyDown(VirtualKeyCode.RIGHT);
-                            Thread.Sleep(Convert.ToInt32(n.Length));
-                            simulator.Keyboard.KeyUp(VirtualKeyCode.RIGHT);
+                        simulator.Keyboard.KeyDown(VirtualKeyCode.RIGHT);
 
-                        }
-                        else
-                            kBot.KeyPress(0x27, 0x20);
+                    }
+                    else
+                        kBot.KeyPress(0x27, 0x20);
 
-                        break;
-                }
-            }).Start();
+                    break;
+            }
             notesPlayed++;
         }
     }
