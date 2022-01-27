@@ -204,6 +204,7 @@ namespace FNFBot20
             if (shouldHold)
                 holdTimes[(int)n.Type % 4] = ((float)n.Length + (float)watch.Elapsed.TotalMilliseconds) + 10;
             
+
             switch (n.Type)
             {
                 case FNFSong.NoteType.Left:
@@ -211,7 +212,8 @@ namespace FNFBot20
                     if (shouldHold)
                     {
                         simulator.Keyboard.KeyDown(VirtualKeyCode.LEFT);
-                            
+                        Thread.Sleep(Convert.ToInt32(n.Length));
+                        simulator.Keyboard.KeyUp(VirtualKeyCode.LEFT);
                     }
                     else
                     {
@@ -254,8 +256,9 @@ namespace FNFBot20
                     else
                         kBot.KeyPress(0x27, 0x20);
 
+
                     break;
-            }
+            } 
             notesPlayed++;
         }
     }
