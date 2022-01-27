@@ -5,15 +5,15 @@
 
 If FNFBot doesn't hit notes perfectly, don't worry, as it doesn't know where to start automatically. You have to press F1 at the right time. So don't create issues telling us that it "hits notes early" or whatever.
 
+## 6K/9K will NOT be added, stop asking for it ##
+
 ### What is FNFBot?
 
 FNFBot is a bot program that lets users automatically play Friday Night Funkin' charts.
 
+## !!! NOT COMPATIBLE WITH [PSYCH ENGINE](https://github.com/ShadowMario/FNF-PsychEngine) !!!
+
 ### How do I use FNFBot?
-
-Video Tutorial:
-
-https://www.youtube.com/watch?v=i7pte79xABg&feature=youtu.be&ab_channel=KadeDev
 
 FNFBot has 3 main sections, as shown here:
 
