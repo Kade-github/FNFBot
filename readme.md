@@ -45,5 +45,9 @@ Currently the keybinds are as follows:
 | F2   | Increase the offset        |
 | F3   | Decrease the offset        |
 
+
 Offset = the amount of time in miliseconds to hit before/after the note time.
 Default: 25
+
+### How To Start
+Press F1 When "Go!" Fades.
