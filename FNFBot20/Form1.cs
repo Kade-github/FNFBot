@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FridayNightFunkin.Json;
 
 namespace FNFBot20
 {
@@ -167,5 +168,14 @@ namespace FNFBot20
             pnlField.Controls.Clear();
         }
 
+        private void hurtNoteChekBox_CheckedChanged(object sender, EventArgs e)
+        {
+            OnlyDecimalConverter.DisableHurtNotes = hurtNoteChekBox.Checked;
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            treSngSelect.Nodes.Clear();
+        }
     }
 }
